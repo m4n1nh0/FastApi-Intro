@@ -1,0 +1,23 @@
+# Generic single-database configuration.
+
+### References
+Alembic -> https://alembic.sqlalchemy.org/en/latest/
+
+### Intall Guide
+    1 - Install: pip install alembic.
+    2 - In the root of the project, run: alembic init migrations.
+    3 - Go to the env.py file and import the Base from SQLAlchemy.
+        3.1 - import from the database connection to the "Base" variable:
+            3.1.1 - from db.postgres import Base
+        3.2 - import the models:
+            3.2.1 - from models.user_mode import User
+        3.4 - Add in target_metadata variable = Base.metadata
+    4 - Inform the URL of your database (Alembic.ini):
+        4.1 - add to the following configuration env.py file config.set_main_option("sqlalchemy.url", url_database)
+### Execution Guide
+    1 - Generate and run migration (review):
+        1.1 - alembic revision --autogenerate -m "name migration"
+        1.2 - Possibility to run informing the version
+            1.2.1 - alembic revision --autogenerate -m "name migration" --rev-id=
+        1.3 - alembic upgrade head
+        1.4 - alembic downgrade -1
