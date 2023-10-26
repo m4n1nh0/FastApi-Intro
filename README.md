@@ -59,7 +59,8 @@ TODO: Guidance on how to upload the project:
       2. Create your virtual env.
          1. [Click here to tutorial access ](https://blog.debugeverything.com/pt/ambientes-virtuais-com-python-virtualenv/)
       3. Install project requirements with commands.
-         1. `pip install -r requirements.txt` ou `pip3 install -r requirements.txt`.
+         1. To create requirements file use this command `pip freeze > requirements.txt`
+         2. `pip install -r requirements.txt` ou `pip3 install -r requirements.txt`.
       4. Running migrations.
          1. `alembic upgrade head` -> to create and feed the tables with initial data.
          2. `alembic revision --autogenerate -m "name migration"` -> to create a new migration.
