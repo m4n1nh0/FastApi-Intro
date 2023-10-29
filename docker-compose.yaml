@@ -1,0 +1,62 @@
+version: "3.10"
+
+services:
+  db:
+    build:
+      dockerfile: ./docker/postgres.dockerfile
+      context: .
+    container_name: postgresbas
+    environment:
+      - POSTGRES_DB=fastapi
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - fastapi
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  redis:
+    build:
+      dockerfile: ./docker/redis.dockerfile
+      context: .
+    networks:
+      - fastapi
+    ports:
+      - "6379"
+
+  basbackend:
+    build:
+      dockerfile: ./docker/backend.dockerfile
+      context: .
+    container_name: basbackend
+    environment:
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS}
+      - SECRET_KEY=MK/M50<+):0<z|a{.z%ztI1D0f`5S7v=Pzh7lAokeNE.b0#(f|
+      - ACCESS_TOKEN_EXPIRE_MINUTES=3600
+      - DOUBLE_FACTOR_EXPIRY_TIME_MINUTES=2
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - BANCO_AUTH=postgresql+asyncpg://postgres:postgres@localhost:5432/fastapi
+      - DOCS=/docs
+      - REDOC=/redoc
+      - OPEN_API_URL=/openapi.json
+    command: bash -c "uvicorn main:app --host 127.0.0.1 --port 8080 --reload --no-server-header"
+    ports:
+      - "8080:8080"
+    networks:
+      - fastapi
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/code # TODO para não precisar remover e subir os containers toda vez que alterar cõdigo
+
+networks:
+  fastapi:
+    driver: bridge
+
+volumes:
+  pgdata:
+
