@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: ./docker/postgres.dockerfile
       context: .
-    container_name: postgresbas
+    container_name: postgres
     environment:
       - POSTGRES_DB=fastapi
       - POSTGRES_USER=postgres
