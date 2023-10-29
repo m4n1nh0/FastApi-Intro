@@ -30,7 +30,7 @@ services:
     build:
       dockerfile: ./docker/backend.dockerfile
       context: .
-    container_name: basbackend
+    container_name: backend
     environment:
       - ALLOW_ORIGINS=${ALLOW_ORIGINS}
       - SECRET_KEY=MK/M50<+):0<z|a{.z%ztI1D0f`5S7v=Pzh7lAokeNE.b0#(f|
@@ -51,7 +51,7 @@ services:
       - db
       - redis
     volumes:
-      - .:/code # TODO para não precisar remover e subir os containers toda vez que alterar cõdigo
+      - .:/code
 
 networks:
   fastapi:
