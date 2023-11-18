@@ -22,7 +22,8 @@ async def login(user_login: LoginSchema,
     """System access."""
     user_data = await UserDTO(session).get_by_username(user_login.username)
 
-    if user_data is not None:
+    if (user_data is not None and
+            user_data.password == user_login.password):
         token_data = {"detail": "Token Gerado",
                       "access_token": await create_token(
                           user=user_data, auth_jwt=auth_jwt),
@@ -30,8 +31,8 @@ async def login(user_login: LoginSchema,
                           user=user_data, auth_jwt=auth_jwt, access=False)}
 
         return token_data
-    else:
-        return {"detail": "Usuario invalido"}
+
+    return {"detail": "Usuario invalido"}
 
 
 @router.post("/v1/refresh")
