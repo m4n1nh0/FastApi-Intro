@@ -18,3 +18,13 @@ def http_exception(message, status, headers=None) -> HTTPException:
         detail=message,
         headers=headers
     )
+
+
+async def delete_none(obj):
+    keys = []
+    for k, v in obj.items():
+        if v is None:
+            keys.append(k)
+
+    for k in keys:
+        del obj[k]

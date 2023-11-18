@@ -19,7 +19,8 @@ async def create_token(user: User, auth_jwt: AuthJWT,
     subject = f"{user.username}"
 
     user_claims = {
-        "valor": "Sou um vaor dentro do token"
+        "user_age": user.age,
+        "user_name": user.usr_name
     }
 
     if access:
