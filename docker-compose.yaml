@@ -51,7 +51,7 @@ services:
       - db
       - redis
     volumes:
-      - .:/code # TODO para não precisar remover e subir os containers toda vez que alterar cõdigo
+      - .:/code
 
 networks:
   fastapi:
